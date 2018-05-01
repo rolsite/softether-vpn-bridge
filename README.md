@@ -17,4 +17,8 @@ Instructions:
 
 7 - Accept terms from Softether contract (Select option 1, 1, 1)
 
-8 - Download VPN Client to you device http://www.softether-download.com/
+8 - Reboot the server to apply new TCP BBR 
+
+9 - Download VPN Client to you device http://www.softether-download.com/
+
+10 - Connect to your new Softether VPN Server
