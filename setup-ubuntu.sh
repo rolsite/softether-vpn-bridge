@@ -79,48 +79,7 @@ echo "net.ipv4.ip_forward = 1" >> /etc/sysctl.d/ipv4_forwarding.conf
 sysctl --system
 
 #Create SoftEther VPN Server service
-touch /etc/init.d/vpnserver
-cat <<EOF >> /etc/init.d/vpnserver
-#!/bin/sh
-### BEGIN INIT INFO
-# Provides:          vpnserver
-# Required-Start:    $remote_fs $syslog
-# Required-Stop:     $remote_fs $syslog
-# Default-Start:     2 3 4 5
-# Default-Stop:      0 1 6
-# Short-Description: Start daemon at boot time
-# Description:       Enable Softether by daemon.
-### END INIT INFO
-DAEMON=/usr/local/vpnserver/vpnserver
-LOCK=/var/lock/subsys/vpnserver
-TAP_ADDR=192.168.7.1
-
-test -x $DAEMON || exit 0
-case "$1" in
-start)
-$DAEMON start
-touch $LOCK
-sleep 1
-/sbin/ifconfig tap_soft $TAP_ADDR
-;;
-stop)
-$DAEMON stop
-rm $LOCK
-;;
-restart)
-$DAEMON stop
-sleep 3
-$DAEMON start
-sleep 1
-/sbin/ifconfig tap_soft $TAP_ADDR
-;;
-*)
-echo "Usage: $0 {start|stop|restart}"
-exit 1
-esac
-exit 0
-EOF
-
+wget -P /etc/init.d https://raw.githubusercontent.com/rolsite/softether-vpn-bridge/master/vpnserver
 chmod 755 /etc/init.d/vpnserver
 update-rc.d vpnserver defaults
 iptables -t nat -A POSTROUTING -s 192.168.7.0/24 -j SNAT --to-source ${SERVER_IP}
