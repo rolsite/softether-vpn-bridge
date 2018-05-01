@@ -29,10 +29,7 @@ link="http://www.softether-download.com/files/softether/"$latest"-tree/Linux/Sof
 
 
 #Update system and install basic packages
-echo iptables-persistent iptables-persistent/autosave_v4 boolean true | debconf-set-selections
-echo iptables-persistent iptables-persistent/autosave_v6 boolean true | debconf-set-selections
-
-apt-get update && apt-get install build-essential dnsmasq fail2ban iftop traceroute iptables-persistent -y
+apt-get update && apt-get install build-essential dnsmasq fail2ban iftop traceroute -y
 
 #Get lastest Softether VPN Server
 wget "$link"
@@ -90,7 +87,9 @@ iptables -A FORWARD -m state --state RELATED,ESTABLISHED -j ACCEPT
 iptables -A FORWARD -s 192.168.7.0/24 -j ACCEPT
 iptables -A FORWARD -j REJECT
 iptables -t nat -A POSTROUTING -s 192.168.7.0/24 -j SNAT --to-source ${SERVER_IP}
-iptables-save > /etc/iptables/rules.v4
+echo iptables-persistent iptables-persistent/autosave_v4 boolean true | debconf-set-selections
+echo iptables-persistent iptables-persistent/autosave_v6 boolean true | debconf-set-selections
+apt-get install iptables-persistent -y
 service dnsmasq restart
 service vpnserver restart
 
