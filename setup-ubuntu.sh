@@ -61,6 +61,7 @@ chmod 600 *
 chmod 700 vpnserver
 chmod 700 vpncmd
 ./vpnserver start
+sleep 2
 ./vpncmd localhost /SERVER /CSV /CMD ServerPasswordSet ${SERVER_PASSWORD}
 ./vpncmd localhost /SERVER /PASSWORD:${SERVER_PASSWORD} /CMD HubDelete DEFAULT
 ./vpncmd localhost /SERVER /PASSWORD:${SERVER_PASSWORD} /CMD HubCreate ${HUB} /PASSWORD:${SERVER_PASSWORD}
