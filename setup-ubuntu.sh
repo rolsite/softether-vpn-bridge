@@ -20,10 +20,11 @@ echo "+++ Wait until the installation finished... +++"
 
 #set version to download
 latest="v4.27-9666-beta-2018.04.21"
-arch="x64-64bit"
+arch="64bit_-_Intel_x64_or_AMD64"
+arch2="x64-64bit"
 
 #generate url to download
-file="softether-vpnserver-"$latest"-linux-"$arch".tar.gz"
+file="softether-vpnserver-"$latest"-linux-"$arch2".tar.gz"
 link="http://www.softether-download.com/files/softether/"$latest"-tree/Linux/SoftEther_VPN_Server/"$arch"/"$file
 
 
