@@ -15,6 +15,6 @@ Instructions:
 
 6 - Set your VPS IP and credentials
 
-7 - Accept terms from Softether contract
+7 - Accept terms from Softether contract (Select option 1, 1, 1)
 
 8 - Download VPN Client to you device http://www.softether-download.com/
