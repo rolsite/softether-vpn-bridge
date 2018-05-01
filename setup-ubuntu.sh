@@ -10,11 +10,11 @@ SHARED_KEY="vpn"
 #Set configs
 echo -n "Enter Server IP: "
 read SERVER_IP
-echo -n "Enter Server Password: "
+echo -n "Set Softether VPN Server Admin Password: "
 read SERVER_PASSWORD
-echo -n "Enter Username: "
+echo -n "Create a VPN Client Username: "
 read USER
-echo -n "Enter User Password: "
+echo -n "Set a VPN Client Password: "
 read USER_PASSWORD
 echo "+++ Wait until the installation finished... +++"
 
