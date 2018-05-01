@@ -29,7 +29,9 @@ link="http://www.softether-download.com/files/softether/"$latest"-tree/Linux/Sof
 
 
 #Update system and install basic packages
-apt-get update && apt-get install build-essential dnsmasq fail2ban iftop traceroute -y
+apt-get update &&
+apt-get install --install-recommends linux-generic-hwe-16.04 -y &&
+apt-get install build-essential dnsmasq fail2ban iftop traceroute -y
 
 #Get lastest Softether VPN Server
 wget "$link"
@@ -92,7 +94,6 @@ service dnsmasq restart
 service vpnserver restart
 
 #upgrarde kernel and active TCP BBR Congestion Control and IPv4 Forwarding
-apt-get install --install-recommends linux-generic-hwe-16.04 -y
 echo "net.ipv4.ip_forward = 1" >> /etc/sysctl.d/ipv4_forwarding.conf
 echo "net.core.default_qdisc=fq" >> /etc/sysctl.conf
 echo "net.ipv4.tcp_congestion_control=bbr" >> /etc/sysctl.conf
