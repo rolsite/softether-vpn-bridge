@@ -75,8 +75,7 @@ cat <<EOF >> /etc/dnsmasq.conf
 interface=tap_soft
 dhcp-range=tap_soft,192.168.7.50,192.168.7.60,12h
 dhcp-option=tap_soft,3,192.168.7.1
-port=0 
-dhcp-option=option:dns-server,8.8.8.8,8.8.4.4
+dhcp-option=tap_soft,6,8.8.8.8,8.8.4.4
 EOF
 
 #Enable IPv4 Forwarding
@@ -91,6 +90,7 @@ iptables -A FORWARD -m state --state RELATED,ESTABLISHED -j ACCEPT
 iptables -A FORWARD -s 192.168.7.0/24 -j ACCEPT
 iptables -A FORWARD -j REJECT
 iptables -t nat -A POSTROUTING -s 192.168.7.0/24 -j SNAT --to-source ${SERVER_IP}
+iptables-save > /etc/iptables/rules.v4
 service dnsmasq restart
 service vpnserver restart
 
