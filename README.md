@@ -1,5 +1,5 @@
-# softether-vpn-bridge
-Script to install Softether VPN in Ubuntu
+# softether-vpn-bridge optimized install
+Script to install Softether VPN in Ubuntu as Local Bridge (faster than SecureNAT) and optimized TCP Congestion Control Algorithm (Google TCP BBR)
 
 Instructions:
 
@@ -15,4 +15,6 @@ Instructions:
 
 6 - Set your VPS IP and credentials
 
-7 - Download VPN Client to you device http://www.softether-download.com/
+7 - Accept terms from Softether contract
+
+8 - Download VPN Client to you device http://www.softether-download.com/
