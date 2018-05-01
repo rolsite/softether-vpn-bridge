@@ -13,4 +13,6 @@ Instructions:
 
 5 - ./setup-ubuntu.sh
 
-6 - Set your custom config
+6 - Set your VPS IP and credentials
+
+7 - Download VPN Client to you device http://www.softether-download.com/
