@@ -97,6 +97,6 @@ service vpnserver restart
 echo "net.ipv4.ip_forward = 1" >> /etc/sysctl.d/ipv4_forwarding.conf
 echo "net.core.default_qdisc=fq" >> /etc/sysctl.conf
 echo "net.ipv4.tcp_congestion_control=bbr" >> /etc/sysctl.conf
-sysctl --system
+reboot
 
-echo "+++ Installation finished +++"
+echo "+++ Installation finished, rebooting server... +++"
