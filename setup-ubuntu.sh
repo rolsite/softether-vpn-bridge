@@ -62,6 +62,7 @@ chmod 700 vpnserver
 chmod 700 vpncmd
 ./vpnserver start
 ./vpncmd localhost /SERVER /CSV /CMD ServerPasswordSet ${SERVER_PASSWORD}
+./vpncmd localhost /SERVER /PASSWORD:${SERVER_PASSWORD} /CMD HubDelete DEFAULT
 ./vpncmd localhost /SERVER /PASSWORD:${SERVER_PASSWORD} /CMD HubCreate ${HUB} /PASSWORD:${SERVER_PASSWORD}
 ./vpncmd localhost /SERVER /PASSWORD:${SERVER_PASSWORD} /HUB:${HUB} /CMD UserCreate ${USER} /GROUP:none /REALNAME:none /NOTE:none
 ./vpncmd localhost /SERVER /PASSWORD:${SERVER_PASSWORD} /HUB:${HUB} /CMD UserPasswordSet ${USER} /PASSWORD:${USER_PASSWORD}
