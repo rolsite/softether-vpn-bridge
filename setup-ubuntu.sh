@@ -75,6 +75,8 @@ cat <<EOF >> /etc/dnsmasq.conf
 interface=tap_soft
 dhcp-range=tap_soft,192.168.7.50,192.168.7.60,12h
 dhcp-option=tap_soft,3,192.168.7.1
+port=0 
+dhcp-option=option:dns-server,8.8.8.8,8.8.4.4
 EOF
 
 #Enable IPv4 Forwarding
