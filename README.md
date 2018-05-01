@@ -1,4 +1,4 @@
-# softether-vpn-bridge optimized install
+# Softether-vpn-bridge optimized install
 Script to install Softether VPN in Ubuntu as Local Bridge (faster than SecureNAT) and optimized TCP Congestion Control Algorithm (Google TCP BBR)
 
 Instructions:
