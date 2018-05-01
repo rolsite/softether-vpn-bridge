@@ -85,6 +85,9 @@ sysctl --system
 wget -P /etc/init.d https://raw.githubusercontent.com/rolsite/softether-vpn-bridge/master/vpnserver
 chmod 755 /etc/init.d/vpnserver
 update-rc.d vpnserver defaults
+iptables -A FORWARD -m state --state RELATED,ESTABLISHED -j ACCEPT
+iptables -A FORWARD -s 192.168.7.0/24 -j ACCEPT
+iptables -A FORWARD -j REJECT
 iptables -t nat -A POSTROUTING -s 192.168.7.0/24 -j SNAT --to-source ${SERVER_IP}
 service dnsmasq restart
 service vpnserver restart
