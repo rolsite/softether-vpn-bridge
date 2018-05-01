@@ -1,5 +1,22 @@
 #!/bin/bash
 
+SERVER_IP=""
+SERVER_PASSWORD=""
+USER=""
+USER_PASSWORD=""
+HUB="VPN"
+SHARED_KEY="vpn"
+
+#Set configs
+echo -n "Enter Server IP: "
+read SERVER_IP
+echo -n "Enter Server Password: "
+read SERVER_PASSWORD
+echo -n "Enter Username: "
+read USER
+echo -n "Enter User Password: "
+read USER_PASSWORD
+echo "Wait until the installation finished..."
 
 #set version to download
 latest="v4.27-9666-beta-2018.04.21"
@@ -43,6 +60,24 @@ chmod 600 *
 chmod 700 vpnserver
 chmod 700 vpncmd
 ./vpnserver start
+./vpncmd localhost /SERVER /CMD ServerPasswordSet ${SERVER_PASSWORD}
+./vpncmd localhost /SERVER /PASSWORD:${SERVER_PASSWORD} /CMD HubCreate ${HUB}
+./vpncmd localhost /SERVER /PASSWORD:${SERVER_PASSWORD} /HUB:${HUB} /CMD UserCreate ${USER} /GROUP:none /REALNAME:none /NOTE:none
+./vpncmd localhost /SERVER /PASSWORD:${SERVER_PASSWORD} /HUB:${HUB} /CMD UserPasswordSet ${USER} /PASSWORD:${USER_PASSWORD}
+./vpncmd localhost /SERVER /PASSWORD:${SERVER_PASSWORD} /CMD IPsecEnable /L2TP:yes /L2TPRAW:no /ETHERIP:no /PSK:${SHARED_KEY} /DEFAULTHUB:${HUB}
+./vpncmd localhost /SERVER /PASSWORD:${SERVER_PASSWORD} /CMD BridgeCreate ${HUB} /DEVICE:soft /TAP:yes
+
+#Set DNSMASQ
+cat <<EOF >> /etc/dnsmasq.conf
+interface=tap_soft
+dhcp-range=tap_soft,192.168.7.50,192.168.7.60,12h
+dhcp-option=tap_soft,3,192.168.7.1
+EOF
+
+#Enable IPv4 Forwarding
+echo "net.ipv4.ip_forward = 1" >> /etc/sysctl.d/ipv4_forwarding.conf
+sysctl --system
+
 
 
 
