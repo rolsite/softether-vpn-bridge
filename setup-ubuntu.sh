@@ -75,9 +75,7 @@ dhcp-option=tap_soft,3,192.168.7.1
 dhcp-option=tap_soft,6,8.8.8.8,8.8.4.4
 EOF
 
-#Enable IPv4 Forwarding
-echo "net.ipv4.ip_forward = 1" >> /etc/sysctl.d/ipv4_forwarding.conf
-sysctl --system
+
 
 #Create SoftEther VPN Server service
 wget -P /etc/init.d https://raw.githubusercontent.com/rolsite/softether-vpn-bridge/master/vpnserver
@@ -93,8 +91,9 @@ apt-get install iptables-persistent -y
 service dnsmasq restart
 service vpnserver restart
 
-#upgrarde kernel and active TCP BBR Congestion Control
+#upgrarde kernel and active TCP BBR Congestion Control and IPv4 Forwarding
 apt-get install --install-recommends linux-generic-hwe-16.04 -y
+echo "net.ipv4.ip_forward = 1" >> /etc/sysctl.d/ipv4_forwarding.conf
 echo "net.core.default_qdisc=fq" >> /etc/sysctl.conf
 echo "net.ipv4.tcp_congestion_control=bbr" >> /etc/sysctl.conf
 sysctl --system
