@@ -17,7 +17,7 @@ Instructions:
 
 7 - Accept terms from Softether contract (Select option 1, 1, 1)
 
-8 - Script will reboot your machine at end
+8 - This script will reboot your machine when completed
 
 9 - Many devices are supported, including Windows, Linux, Android and IOS natively.
 
