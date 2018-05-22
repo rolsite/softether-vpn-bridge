@@ -31,9 +31,8 @@ link="http://www.softether-download.com/files/softether/"$latest"-tree/Linux/Sof
 
 
 #Update system and install basic packages
-apt-get update &&
-apt-get install --install-recommends linux-generic-hwe-16.04 -y &&
-apt-get install build-essential dnsmasq fail2ban iftop traceroute -y
+yum update &&
+yum install build-essential dnsmasq fail2ban iftop traceroute -y
 
 #Get lastest Softether VPN Server
 wget "$link"
