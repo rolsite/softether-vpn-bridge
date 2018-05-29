@@ -37,6 +37,15 @@ yum -y install net-tools
 yum -y groupinstall "Development Tools"
 yum install dnsmasq fail2ban iftop traceroute -y
 
+#disable firewall and SELinux
+systemctl disable firewalld
+systemctl stop firewalld
+systemctl status firewalld
+service iptables save
+service iptables stop
+chkconfig iptables off
+sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config
+
 #Get lastest Softether VPN Server
 wget "$link"
 if [ -f "$file" ];then
@@ -87,14 +96,13 @@ EOF
 wget -P /etc/init.d https://raw.githubusercontent.com/rolsite/softether-vpn-bridge/master/vpnserver
 chmod 755 /etc/init.d/vpnserver
 chkconfig --add vpnserver
-sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config
 iptables -A FORWARD -m state --state RELATED,ESTABLISHED -j ACCEPT
 iptables -A FORWARD -s 192.168.7.0/24 -j ACCEPT
 iptables -A FORWARD -j REJECT
 iptables -t nat -A POSTROUTING -s 192.168.7.0/24 -j SNAT --to-source ${SERVER_IP}
 iptables-save > /etc/sysconfig/iptables
-systemctl restart dnsmasq
-systemctl restart vpnserver
+#systemctl restart dnsmasq
+#systemctl restart vpnserver
 
 
 #upgrarde kernel and active TCP BBR Congestion Control and IPv4 Forwarding
