@@ -31,8 +31,11 @@ link="http://www.softether-download.com/files/softether/"$latest"-tree/Linux/Sof
 
 
 #Update system and install basic packages
-yum update &&
-yum install build-essential dnsmasq fail2ban iftop traceroute -y
+yum update -y &&
+yum -y install epel-release
+yum -y install net-tools
+yum -y groupinstall "Development Tools"
+yum install dnsmasq fail2ban iftop traceroute -y
 
 #Get lastest Softether VPN Server
 wget "$link"
@@ -83,21 +86,21 @@ EOF
 #Create SoftEther VPN Server service
 wget -P /etc/init.d https://raw.githubusercontent.com/rolsite/softether-vpn-bridge/master/vpnserver
 chmod 755 /etc/init.d/vpnserver
-update-rc.d vpnserver defaults
+chkconfig --add vpnserver
+sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config
 iptables -A FORWARD -m state --state RELATED,ESTABLISHED -j ACCEPT
 iptables -A FORWARD -s 192.168.7.0/24 -j ACCEPT
 iptables -A FORWARD -j REJECT
 iptables -t nat -A POSTROUTING -s 192.168.7.0/24 -j SNAT --to-source ${SERVER_IP}
-echo iptables-persistent iptables-persistent/autosave_v4 boolean true | debconf-set-selections
-echo iptables-persistent iptables-persistent/autosave_v6 boolean true | debconf-set-selections
-apt-get install iptables-persistent -y
-service dnsmasq restart
-service vpnserver restart
+iptables-save > /etc/sysconfig/iptables
+systemctl restart dnsmasq
+systemctl restart vpnserver
+
 
 #upgrarde kernel and active TCP BBR Congestion Control and IPv4 Forwarding
 echo "net.ipv4.ip_forward = 1" >> /etc/sysctl.d/ipv4_forwarding.conf
-echo "net.core.default_qdisc=fq" >> /etc/sysctl.conf
-echo "net.ipv4.tcp_congestion_control=bbr" >> /etc/sysctl.conf
+#echo "net.core.default_qdisc=fq" >> /etc/sysctl.conf
+#echo "net.ipv4.tcp_congestion_control=bbr" >> /etc/sysctl.conf
 
 echo "+++ Installation finished, rebooting server... +++"
 reboot
