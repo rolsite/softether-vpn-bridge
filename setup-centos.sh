@@ -108,9 +108,14 @@ systemctl enable iptables.service
 
 
 #upgrarde kernel and active TCP BBR Congestion Control and IPv4 Forwarding
+rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
+rpm -Uvh http://www.elrepo.org/elrepo-release-7.0-2.el7.elrepo.noarch.rpm
+yum --enablerepo=elrepo-kernel install kernel-ml -y
+grub2-set-default 0
+
 echo "net.ipv4.ip_forward = 1" >> /etc/sysctl.d/ipv4_forwarding.conf
-#echo "net.core.default_qdisc=fq" >> /etc/sysctl.conf
-#echo "net.ipv4.tcp_congestion_control=bbr" >> /etc/sysctl.conf
+echo "net.core.default_qdisc=fq" >> /etc/sysctl.conf
+echo "net.ipv4.tcp_congestion_control=bbr" >> /etc/sysctl.conf
 
 echo "+++ Installation finished, rebooting server... +++"
 reboot
