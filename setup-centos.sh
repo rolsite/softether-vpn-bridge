@@ -35,7 +35,7 @@ yum update -y &&
 yum -y install epel-release
 yum -y install net-tools
 yum -y groupinstall "Development Tools"
-yum install dnsmasq fail2ban iftop traceroute -y
+yum install dnsmasq fail2ban iftop traceroute iptables-services -y
 
 #disable firewall and SELinux
 systemctl disable firewalld
@@ -103,6 +103,8 @@ iptables -t nat -A POSTROUTING -s 192.168.7.0/24 -j SNAT --to-source ${SERVER_IP
 iptables-save > /etc/sysconfig/iptables
 systemctl enable dnsmasq
 systemctl enable vpnserver
+systemctl enable iptables.service
+/usr/libexec/iptables/iptables.init save
 
 
 #upgrarde kernel and active TCP BBR Congestion Control and IPv4 Forwarding
