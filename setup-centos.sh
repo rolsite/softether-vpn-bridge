@@ -101,8 +101,8 @@ iptables -A FORWARD -s 192.168.7.0/24 -j ACCEPT
 iptables -A FORWARD -j REJECT
 iptables -t nat -A POSTROUTING -s 192.168.7.0/24 -j SNAT --to-source ${SERVER_IP}
 iptables-save > /etc/sysconfig/iptables
-#systemctl restart dnsmasq
-#systemctl restart vpnserver
+systemctl enable dnsmasq
+systemctl enable vpnserver
 
 
 #upgrarde kernel and active TCP BBR Congestion Control and IPv4 Forwarding
